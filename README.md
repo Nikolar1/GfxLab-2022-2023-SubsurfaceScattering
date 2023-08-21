@@ -1,5 +1,7 @@
-# GfxLab
+# GfxLab - Subsurface scattering
 
+## Opis
+- Ovo je fork originalnog GfxLab-a sa namerom dodavanja subsurface scattering-a
 
 ## Nameštanje
 
