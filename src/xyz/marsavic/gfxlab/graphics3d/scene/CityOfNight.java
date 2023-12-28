@@ -3,12 +3,14 @@ package xyz.marsavic.gfxlab.graphics3d.scene;
 import xyz.marsavic.geometry.Vector;
 import xyz.marsavic.gfxlab.Color;
 import xyz.marsavic.gfxlab.Vec3;
+import xyz.marsavic.gfxlab.graphics3d.BSSSDF;
 import xyz.marsavic.gfxlab.graphics3d.Material;
 import xyz.marsavic.gfxlab.graphics3d.Scene;
 import xyz.marsavic.gfxlab.graphics3d.Solid;
 import xyz.marsavic.gfxlab.graphics3d.solids.Box;
 import xyz.marsavic.gfxlab.graphics3d.solids.Group;
 import xyz.marsavic.gfxlab.graphics3d.solids.HalfSpace;
+import xyz.marsavic.random.RNG;
 import xyz.marsavic.random.sampling.Sampler;
 
 import java.util.ArrayList;
@@ -20,7 +22,21 @@ public class CityOfNight extends Scene.Base {
 	public CityOfNight(int n, long seed) {
 		List<Solid> solids = new ArrayList<>();
 		Sampler sampler = new Sampler(seed);
-		
+		RNG rng1 = new RNG(806669389798241098L);
+		BSSSDF[] bsssdfArray = {
+				BSSSDF.ABSORPTIVE,
+				BSSSDF.APPLE,
+				BSSSDF.CHICKEN1,
+				BSSSDF.CHICKEN2,
+				BSSSDF.CREAM,
+				BSSSDF.KETCHUP,
+				BSSSDF.MARBLE,
+				BSSSDF.POTATO,
+				BSSSDF.SKIMMILK,
+				BSSSDF.SKIN1,
+				BSSSDF.SKIN2,
+				BSSSDF.WHOLEMILK
+		};
 		List<xyz.marsavic.geometry.Box> boxes = new ArrayList<>();
 		
 		int nTrials = 0;

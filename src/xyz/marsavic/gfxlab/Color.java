@@ -118,6 +118,10 @@ public class Color {
 	public Color add(Color o) {
 		return rgb(r + o.r, g + o.g, b + o.b);
 	}
+
+	public Color add(double c) {
+		return rgb(r + c, g + c, b + c);
+	}
 	
 	
 	public Color sub(Color o) {
@@ -138,6 +142,12 @@ public class Color {
 	public Color div(double c) {
 		return rgb(r / c, g / c, b / c);
 	}
+
+	public Color div(Color o) {
+		return rgb(r / o.r, g / o.g, b / o.b);
+	}
+
+
 	
 	
 	public Color pow(double c) {
@@ -165,7 +175,23 @@ public class Color {
 				0.072187 * b;
 	}
 	
-	
+	public Color exp() {
+		return rgb(
+				Math.exp(r),
+				Math.exp(g),
+				Math.exp(b)
+		);
+	}
+
+	public Color sqrt() {
+		return rgb(
+				Math.sqrt(r),
+				Math.sqrt(g),
+				Math.sqrt(b)
+		);
+	}
+
+	public Color negate() { return rgb(-r , -g, -b); }
 	/**
 	 * For colors with components in [0, 1].
 	 */

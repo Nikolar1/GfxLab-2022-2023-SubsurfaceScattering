@@ -13,8 +13,27 @@ public record Material(
 		double refractiveIndex,
 		
 		Color emittance,
-		BSDF bsdf
+		BSDF bsdf,
+		BSSSDF bsssdf
 ) implements F1<Material, Vector> {
+
+	public Material(Color diffuse, Color specular, double shininess, Color reflective, Color refractive, double refractiveIndex, Color emittance, BSSSDF bsssdf) {
+		this(diffuse, specular, shininess, reflective, refractive, refractiveIndex, emittance,
+				BSDF.add(
+						new BSDF[] {
+								BSDF.diffuse   (diffuse),
+								BSDF.reflective(reflective),
+								BSDF.refractive(refractive, refractiveIndex)
+						},
+						new double[] {
+								diffuse.luminance(),
+								reflective.luminance(),
+								refractive.luminance()
+						}
+				),
+				bsssdf
+		);
+	}
 	
 	public Material(Color diffuse, Color specular, double shininess, Color reflective, Color refractive, double refractiveIndex, Color emittance) {
 		this(diffuse, specular, shininess, reflective, refractive, refractiveIndex, emittance,
@@ -29,12 +48,17 @@ public record Material(
 								reflective.luminance(),
 								refractive.luminance()
 						}
-				)
+				),
+				BSSSDF.ABSORPTIVE
 		);
 	}
 	
 	public Material(BSDF bsdf) {
-		this(Color.BLACK, Color.BLACK, 32.0, Color.BLACK, Color.BLACK, 1.5, Color.BLACK, bsdf);
+		this(Color.BLACK, Color.BLACK, 32.0, Color.BLACK, Color.BLACK, 1.5, Color.BLACK, bsdf, BSSSDF.ABSORPTIVE);
+	}
+
+	public Material(BSDF bsdf, BSSSDF bsssdf){
+		this(Color.BLACK, Color.BLACK, 32.0, Color.BLACK, Color.BLACK, 1.5, Color.BLACK, bsdf, bsssdf);
 	}
 	
 	
@@ -51,12 +75,14 @@ public record Material(
 	public Material refractive     (Color  refractive     ) { return new Material(diffuse, specular, shininess, reflective, refractive, refractiveIndex, emittance); }
 	public Material refractiveIndex(double refractiveIndex) { return new Material(diffuse, specular, shininess, reflective, refractive, refractiveIndex, emittance); }
 	public Material emittance      (Color  emittance      ) { return new Material(diffuse, specular, shininess, reflective, refractive, refractiveIndex, emittance); }
+
+	public Material bsssdf(BSSSDF bsssdf) { return new Material(diffuse, specular, shininess, reflective, refractive, refractiveIndex, emittance, bsssdf); }
 	
 	public Material specularCopyDiffuse() { return this.specular(diffuse()); }
 	
 	
 	public static final Material BLACK   = new Material(Color.BLACK, Color.BLACK, 32, Color.BLACK, Color.BLACK, 1.5, Color.BLACK);
-	
+
 	public static Material matte(Color  c) { return BLACK.diffuse(c); }
 	public static Material matte(double k) { return matte(Color.gray(k)); }
 	public static Material matte(        ) { return matte(1.0); }

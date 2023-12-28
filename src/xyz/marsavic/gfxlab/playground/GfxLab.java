@@ -69,7 +69,7 @@ public class GfxLab {
 														e(16)
 												),
 */
-/*
+
 												e(PathTracer::new,
 														e(Oranges::new),
 														e(TransformedCamera::new,
@@ -83,11 +83,11 @@ public class GfxLab {
 														),
 														e(16)
 												),
-*/
-												e(PathTracer::new,
+
+/*											e(PathTracer::new,
 														e(CityOfNight::new, e(50), e(0x3B660712F3CFA050L)),
 														e(TransformedCamera::new,
-																e(ThinLensFOV::new, e(1.0/3), e(7.0), e(0.1)),
+																e(Perspective::new, e(1.0/3)),
 																e(Affine.IDENTITY
 																		.then(Affine.translation(Vec3.xyz(0, 0, -7)))
 																		.then(Affine.rotationAboutX(0.12))
@@ -96,7 +96,7 @@ public class GfxLab {
 														),
 														e(16)
 												),
-										
+*/
 												e(TransformationsFromSize.toGeometric, eSize)
 										)
 								),
