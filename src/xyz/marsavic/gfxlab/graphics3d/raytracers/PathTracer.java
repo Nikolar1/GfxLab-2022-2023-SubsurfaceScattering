@@ -56,7 +56,7 @@ public class PathTracer extends RayTracer {
 		BSSSDF.Result bssdfResult = material.bsssdf().sample(sampler, n_, p, i);
 		if ( bssdfResult.outA() != Vec3.ZERO) {
 			double ft = 1.0 - fresnelDielectric(Math.abs(i.dot(n_)), 1.0, material.bsssdf().getEta());
-			Ray rayScattered = Ray.pd(bssdfResult.outA(), bssdfResult.outB());
+			Ray rayScattered = Ray.pq(bssdfResult.outA(), bssdfResult.outB());
 			Hit hit2 = scene.solid().firstHit(rayScattered, EPSILON);
 			// == is intentional im checking if I hit the exact same object again
 			if (hit2.t() != Double.POSITIVE_INFINITY && hit2.material().bsssdf() == material.bsssdf()) {

@@ -97,14 +97,14 @@ public class BSSSDF {
                         (zr
                                 .mul(ONE.add(sTrDr))
                                 .mul(sTrDr.negate().exp().div(dr.mul(dr).mul(dr)))
-                                .add((zr
+                                .add((zv
                                         .mul(ONE.add(sTrDv))
                                         .mul(sTrDv.negate().exp().div(dv.mul(dv).mul(dv)))))
                         ));
     }
 
     //Fdr - average diffuse Fresnel reflectance (according to Donner 06)
-    static double fdr(double eta){
+    private static double fdr(double eta){
         if (eta < 1.0){
             return -0.4399 + 0.7099 / eta - 0.3319 / (eta * eta) + 0.0636 / (eta * eta * eta);
         }else {
